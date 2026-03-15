@@ -1,1 +1,1 @@
-update signal to sigaction
+updated signal to sigaction
