@@ -1,23 +1,25 @@
 #ifndef BCM_GPIO_H
 #define BCM_GPIO_H
 
-#define RPI4
+#if !defined (RPI3) && !defined (RPI4) && !defined (RPI5)
+#error "Must define RPI type (RPI3, RPI4, RPI5)  in gcc command line: e.g -DRPI3"
+#endif
 
 #define MASK(w) (((uint32_t) 1) << w)
 #define MODIFY_FIELD(reg, pos, wid, value) \
   ((reg) = ((reg)& (~((MASK(wid)-1) << pos))) |	\
    ( ((uint32_t)(value) & (MASK(wid)-1)) << pos))
 
-#ifdef RPI4
-  #define GPIO_BASE	0xFE200000   // on RPi 4
-  #define GPIO_STRUCT   GPIO_BCM2711
-#else
-#ifdef RPI3
+#if defined (RPI3)
  #define GPIO_BASE    0x3F200000   // on the RPi 2/3
  #define GPIO_STRUCT   GPIO_BCM2835
+#elif defined (RPI4)
+  #define GPIO_BASE	0xFE200000   // on RPi 4
+  #define GPIO_STRUCT   GPIO_BCM2711
+#elif defined (RPI5)
+ #error "Need to modify BCM_GPIO.h to support RPi5"
 #else
- #define GPIO_BASE  0x20000000 // on RPi models other than the RPi 2,3,4
-#endif
+ #define GPIO_BASE  0x20000000 // on RPi models other than the RPi 2,3,4,5
 #endif
 
 

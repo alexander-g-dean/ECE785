@@ -1,4 +1,6 @@
 #!/bin/bash
-gcc -O3 LEDflash.c -o LEDflash
-gcc -O3 c_devmem_flash.c -o c_devmem_flash
+# change to RPI3, RPI4 or RPI5 as needed
+TARG_PI=RPI4
+gcc -O3 LEDflash.c -D$TARG_PI -o LEDflash
+gcc -O3 c_devmem_flash.c -D$TARG_PI -o c_devmem_flash
 
