@@ -3,9 +3,7 @@
 
 # one argument: g
 if [[ $# -gt 0 && $1 = "g" ]] ; then
-    while true; do
-	gpioset -t1 GPIO17=1
-    done
+    gpioset -t1 GPIO17=1
 else
     # no arguments (or more than one)
     while true; do
