@@ -4,6 +4,7 @@ half_period=2000
 if [ $# -gt 0 ] ; then
     half_period=$1
 fi
-echo "half_period is ${half_period}us"
-gpioset -t "$half_period"us GPIO18=1
+half_period+="us"
+echo "half_period is $half_period"
+gpioset -t "$half_period" GPIO18=1
 exit
