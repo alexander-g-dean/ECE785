@@ -1,5 +1,8 @@
 CC = gcc
 
+# SG Version option defined on compiler command line
+VER = 12
+
 # Select one based on AArch
 CFLAGS_FLOAT = # AArch64
 # CFLAGS_FLOAT = -mfloat-abi=hard  -mfpu=crypto-neon-fp-armv8 # for AArch32
@@ -8,7 +11,7 @@ CFLAGS_FLOAT = # AArch64
 CFLAGS_CPU = -mcpu=cortex-a72
 # CFLAGS_CPU = -mcpu=cortex-a53
 
-CFLAGS = -c -Wall -g -ggdb -O3 $(CFLAGS_FLOAT) $(CFLAGS_CPU)
+CFLAGS = -c -Wall -g -ggdb -O3 $(CFLAGS_FLOAT) $(CFLAGS_CPU) -D VER=$(VER)
 
 PROF =  -pg -g # Add for gprof $(PROF)
 
