@@ -15,5 +15,6 @@ typedef struct {
 	float Lon;
 	char Name[24];
 } PT_T;
+extern const PT_T waypoints[];
 
 #endif

@@ -11,8 +11,9 @@
 #define TEST1_LON (-79.0)
 
 #define N_TESTS (100000)
+#define PTS_PER_TEST (ppt)
 
-
+extern int ppt;
 /*----------------------------------------------------------------------------
   MAIN function
  *----------------------------------------------------------------------------*/
@@ -30,17 +31,15 @@ int main (void) {
 	cur_pos_lat = TEST1_LAT;
 	cur_pos_lon = TEST1_LON;
 
-	/*	printf("Current location is %f deg N, %f deg W\n", cur_pos_lat,
-	       cur_pos_lon);
-	*/
+	/*  printf("Current location is %f deg N, %f deg W\n", cur_pos_lat,
+	       cur_pos_lon); */
 	for (n=0; n<N_TESTS; n++) {
 	  clock_gettime(CLOCK_THREAD_CPUTIME_ID, &start);
 	  Find_Nearest_Waypoint(cur_pos_lat, cur_pos_lon,
 				&dist, &bearing, &name);
 	  clock_gettime(CLOCK_THREAD_CPUTIME_ID, &end);
 	  /* printf("Closest waypoint is %s. %f km away at bearing %f degrees\n",
-	       name, dist, bearing);
-	  */
+	       name, dist, bearing); */
 	  diff = (1000000000 * (end.tv_sec - start.tv_sec)) +
 	    end.tv_nsec - start.tv_nsec;
 	  //	  printf("%2d: %8lu ns\n", n, diff);
@@ -48,14 +47,18 @@ int main (void) {
 	  if (diff < min)
 	    min = diff;
 	}
-	printf("Closest waypoint is %s. %f km away at bearing %f degrees\n",
-	       name, dist, bearing);
+	/* printf("Closest waypoint is %s. %f km away at bearing %f degrees\n",
+	   name, dist, bearing); */
 	
 	printf("Total time: %.3f us for %d tests\n", total/1000.0, N_TESTS);
 	float avg_time_us =  total/(1000.0*N_TESTS);
 	float min_time_us =  min/1000.0;
-	printf("Average %10.3f us %.2f cycles\n", avg_time_us, 1000*avg_time_us*f_CPU_GHz);
-	printf("Minimum %10.3f us %.2f cycles\n", min_time_us, 1000*min_time_us*f_CPU_GHz); 
+	printf("Per FNW call: Average %8.3f us %8.2f cycles, Min %8.3f us %8.2f cycles\n",
+	       avg_time_us, 1000*avg_time_us*f_CPU_GHz, min_time_us, 1000*min_time_us*f_CPU_GHz); 
+	printf("Per Waypoint: Average %8.3f us %8.2f cycles, Min %8.3f us %8.2f cycles\n",
+	       avg_time_us/PTS_PER_TEST, 1000*avg_time_us*f_CPU_GHz/PTS_PER_TEST,
+	       min_time_us/PTS_PER_TEST, 1000*min_time_us*f_CPU_GHz/PTS_PER_TEST); 
+
 	exit(0);
 }
 

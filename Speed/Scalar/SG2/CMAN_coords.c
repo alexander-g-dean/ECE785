@@ -169,3 +169,5 @@ const PT_T waypoints[] = {	//	Lat 		sin(Lat)		cos(Lat)		Lon		Name
 	{	0.00000000	,	0	,	1	,	0.00000000	,	"END"	},
 
 };
+
+int ppt = sizeof(waypoints)/sizeof(PT_T);
