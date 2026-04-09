@@ -10,7 +10,7 @@ while [ $ver -lt 15 ]; do
     sudo perf report --stdio --stdio-color --percent-limit 4  -n  > pr$ver.txt
     sudo perf annotate --stdio --stdio-color  --percent-limit 4 > an$ver.txt 2> /dev/null
     grep -v \# pr$ver.txt
-    grep \>: an$ver.txt
+    grep -n  \>: an$ver.txt
     
     let ver=ver+1
 done
