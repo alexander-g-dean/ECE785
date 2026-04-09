@@ -22,8 +22,10 @@ int main (void) {
 	struct timespec start, end;
 	unsigned long diff, total=0, min=1234567890;
 	int n=0;
+	float f_CPU_GHz = 1.5; // Change if needed
 
-        printf("SG2 source code optimization version %d\n", version);
+        printf("SG2 source code optimization version %d, CPU freq assumed to be %3.1f GHz\n", version,
+	       f_CPU_GHz);
 	
 	cur_pos_lat = TEST1_LAT;
 	cur_pos_lon = TEST1_LON;
@@ -46,10 +48,14 @@ int main (void) {
 	  if (diff < min)
 	    min = diff;
 	}
-	printf("Difference: %lu Total time: %lu ns for %d tests\n", diff, total, N_TESTS);
+	printf("Closest waypoint is %s. %f km away at bearing %f degrees\n",
+	       name, dist, bearing);
 	
-	printf("Average %10.3f us\n", total/(1000.0*N_TESTS));
-	printf("Minimum %10.3f us\n",  min/1000.0);
+	printf("Total time: %.3f us for %d tests\n", total/1000.0, N_TESTS);
+	float avg_time_us =  total/(1000.0*N_TESTS);
+	float min_time_us =  min/1000.0;
+	printf("Average %10.3f us %.2f cycles\n", avg_time_us, 1000*avg_time_us*f_CPU_GHz);
+	printf("Minimum %10.3f us %.2f cycles\n", min_time_us, 1000*min_time_us*f_CPU_GHz); 
 	exit(0);
 }
 
