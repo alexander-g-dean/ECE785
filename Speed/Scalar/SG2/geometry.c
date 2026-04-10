@@ -17,6 +17,7 @@ int version = VER; // make visible to main
 12: Calc_Closeness
 13: Don't do bearing
 14: Don't call strcmp, but use uint32 comparison to detect END instead
+15: Prefetch start of next waypoint's name
 */
 
 // Table holds precalculated sin/cos for p2. Table Lat/Lon values are in radians
