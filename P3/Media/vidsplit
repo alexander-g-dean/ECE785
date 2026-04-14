@@ -1,0 +1,4 @@
+#!/bin/bash
+# Split concatenated yuv file (frame by frame) into numbered sequence of yuv single image files
+
+split -d --bytes=1382400 --additional-suffix=.yuv $1 `basename $1 .yuv`

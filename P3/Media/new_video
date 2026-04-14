@@ -1,0 +1,4 @@
+#!/bin/bash
+# Record new video from camera at reduced frame rate into output file named as argument
+
+rpicam-vid --frames 20 --width 1280 --height 720 --framerate 5 --codec yuv420 -o $1
