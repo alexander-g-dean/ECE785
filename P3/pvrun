@@ -1,0 +1,26 @@
+#!/bin/bash
+# Run imstab with perf. If given -c argument, split output files
+# into a yuv file per frame and convert from yuv to jpg
+
+sudo perf record Code/imstab
+# or use perf stat, below
+# sudo perf stat -e cycles,l1d_cache,l1d_cache_refill,l2d_cache,l2d_cache_refill,br_pred,br_mis_pred Code/imstab
+
+if [ "$1" = "-c" ]; then
+   do_convert="true"
+else
+    do_convert="false"
+fi
+   
+if $do_convert; then 
+    echo "Converting .yuv files to .jpg"
+    cd Media/VOut
+    ../vidsplit test3_dbg.yuv
+    ../vidsplit test3_stab.yuv
+    ../mconvert test3_dbg
+    ../mconvert test3_stab	
+    cd ..
+    cd ..
+else
+    echo "NOT converting .yuv files"    
+fi
